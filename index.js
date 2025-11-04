@@ -14,7 +14,12 @@ connectDB();
 
 // Security middleware
 app.use(helmet());
+
+// CORS middleware - Apply to all routes
 app.use(cors(corsOptions));
+
+// Handle preflight requests for all routes
+app.options('*', cors(corsOptions));
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
@@ -56,6 +61,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log('CORS: Enabled for all origins');
 });
 
 module.exports = app;
